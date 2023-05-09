@@ -1,8 +1,5 @@
 package com.example.practicaltest.services;
 
-import com.example.practicaltest.dto.TransactionDepositResponseDto;
-import com.example.practicaltest.dto.TransactionTransferResponseDto;
-import com.example.practicaltest.dto.TransactionWithdrawResponseDto;
 import com.example.practicaltest.exeption.IncorrectPinException;
 import com.example.practicaltest.exeption.InsufficientFundsException;
 import com.example.practicaltest.exeption.ResourceNotFoundException;
@@ -29,7 +26,7 @@ public class TransactionService {
     }
 
 
-    public TransactionDepositResponseDto deposit(int accountNumber, BigDecimal amount) {
+    public Transaction deposit(int accountNumber, BigDecimal amount) {
         Account account = accountRepository.findByAccountNumber(accountNumber);
         if (account == null) {
             throw new ResourceNotFoundException("Номер счета не найден");
@@ -40,10 +37,10 @@ public class TransactionService {
         Transaction transaction = new Transaction(LocalDateTime.now(), accountNumber, amount);
         account.getTransactions().add(transaction);
         accountRepository.save(account);
-        return new TransactionDepositResponseDto(transaction.getAmount(), transaction.getToAccountNumber(), transaction.getTimestamp());
+        return transaction;
     }
 
-    public TransactionWithdrawResponseDto withdraw(int fromAccountNumber, BigDecimal amount, String pinCode)  {
+    public Transaction withdraw(int fromAccountNumber, BigDecimal amount, String pinCode) {
         Account fromAccount = accountRepository.findByAccountNumber(fromAccountNumber);
 
         if (fromAccount == null) {
@@ -63,10 +60,10 @@ public class TransactionService {
         Transaction transaction = new Transaction(LocalDateTime.now(), fromAccountNumber, amount.negate());
         fromAccount.getTransactions().add(transaction);
         accountRepository.save(fromAccount);
-        return new TransactionWithdrawResponseDto(amount.negate(), fromAccountNumber, LocalDateTime.now());
+        return transaction;
     }
 
-    public TransactionTransferResponseDto transfer(int fromAccountNumber, int toAccountNumber, BigDecimal amount) throws InsufficientFundsException {
+    public Transaction transfer(int fromAccountNumber, int toAccountNumber, BigDecimal amount) throws InsufficientFundsException {
         Account fromAccount = accountRepository.findByAccountNumber(fromAccountNumber);
 
         if (fromAccount == null) {
@@ -93,7 +90,7 @@ public class TransactionService {
 
         accountRepository.save(fromAccount);
         accountRepository.save(toAccount);
-        return new TransactionTransferResponseDto(amount.negate(), fromAccountNumber, toAccountNumber, LocalDateTime.now());
+        return toTransaction;
     }
 
     public List<Transaction> findByAccountNumber(int accountNumber) {

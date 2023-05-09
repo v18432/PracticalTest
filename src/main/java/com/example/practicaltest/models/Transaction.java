@@ -1,11 +1,16 @@
 package com.example.practicaltest.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transactions")
+@Getter
+@Setter
 public class Transaction {
 
     @Id
@@ -35,45 +40,4 @@ public class Transaction {
         this.toAccountNumber = toAccountNumber;
         this.amount = amount;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public int getFromAccountNumber() {
-        return fromAccountNumber;
-    }
-
-    public void setFromAccountNumber(int fromAccountNumber) {
-        this.fromAccountNumber = fromAccountNumber;
-    }
-
-    public int getToAccountNumber() {
-        return toAccountNumber;
-    }
-
-    public void setToAccountNumber(int toAccountNumber) {
-        this.toAccountNumber = toAccountNumber;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
 }

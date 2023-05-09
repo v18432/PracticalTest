@@ -1,10 +1,8 @@
 package com.example.practicaltest;
 
 import com.example.practicaltest.dto.AccountResponseDto;
-import com.example.practicaltest.dto.TransactionDepositResponseDto;
-import com.example.practicaltest.dto.TransactionTransferResponseDto;
-import com.example.practicaltest.dto.TransactionWithdrawResponseDto;
 import com.example.practicaltest.models.Account;;
+import com.example.practicaltest.models.Transaction;
 import com.example.practicaltest.repositories.AccountRepository;
 import com.example.practicaltest.services.AccountService;
 import com.example.practicaltest.services.TransactionService;
@@ -72,7 +70,7 @@ class PracticalTestApplicationTests {
     void testDeposit() {
         Account account = accountService.createAccount("Oleg", "1234");
 
-        TransactionDepositResponseDto response = transactionService.deposit(account.getAccountNumber(), new BigDecimal("1000"));
+        Transaction response = transactionService.deposit(account.getAccountNumber(), new BigDecimal("1000"));
 
         assertNotNull(response);
         assertEquals(response.getAmount(), response.getAmount());
@@ -82,14 +80,14 @@ class PracticalTestApplicationTests {
 
     @Test
     void testWithdraw() {
-        Account account = new Account("Ivan", 1234, "1234", new BigDecimal("100"));
+        Account account = new Account("Ivan", 6345956, "1234", new BigDecimal("100"));
         accountRepository.save(account);
         BigDecimal amount = new BigDecimal("50");
 
-        TransactionWithdrawResponseDto transaction = transactionService.withdraw(account.getAccountNumber(), amount, account.getPinCode());
+        Transaction transaction = transactionService.withdraw(account.getAccountNumber(), amount, account.getPinCode());
 
         assertNotNull(transaction);
-        assertEquals(transaction.getFromAccountNumber(), account.getAccountNumber());
+        assertEquals(transaction.getToAccountNumber(), account.getAccountNumber());
         assertEquals(transaction.getAmount(), amount.negate());
 
     }
@@ -102,12 +100,12 @@ class PracticalTestApplicationTests {
         accountRepository.save(account2);
         BigDecimal amount = new BigDecimal("50");
 
-        TransactionTransferResponseDto transaction = transactionService.transfer(account1.getAccountNumber(), account2.getAccountNumber(), amount);
+        Transaction transaction = transactionService.transfer(account1.getAccountNumber(), account2.getAccountNumber(), amount);
 
         assertNotNull(transaction);
         assertEquals(transaction.getFromAccountNumber(), account1.getAccountNumber());
         assertEquals(transaction.getToAccountNumber(), account2.getAccountNumber());
-        assertEquals(transaction.getAmount(), amount.negate());
+        assertEquals(transaction.getAmount(), amount);
 
     }
 

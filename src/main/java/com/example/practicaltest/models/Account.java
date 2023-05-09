@@ -1,11 +1,17 @@
 package com.example.practicaltest.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
 @Table(name = "accounts")
+@Getter
+@Setter
 public class Account {
 
     @Id
@@ -29,58 +35,5 @@ public class Account {
         this.accountNumber = accountNumber;
         this.pinCode = pinCode;
         this.balance = balance;
-    }
-
-    public Account(String beneficiaryName, BigDecimal balance) {
-        this.beneficiaryName = beneficiaryName;
-        this.balance = balance;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public int getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public String getBeneficiaryName() {
-        return beneficiaryName;
-    }
-
-    public void setBeneficiaryName(String name) {
-        this.beneficiaryName = name;
-    }
-
-    public String getPinCode() {
-        return pinCode;
-    }
-
-    public void setPinCode(String pinCode) {
-        this.pinCode = pinCode;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
-
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
     }
 }

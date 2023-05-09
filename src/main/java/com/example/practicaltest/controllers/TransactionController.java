@@ -22,19 +22,19 @@ public class TransactionController {
     }
 
     @PostMapping("transactions/deposit")
-    public ResponseEntity<TransactionDepositResponseDto> deposit(@RequestBody TransactionDepositRequestDto transaction) {
+    public ResponseEntity<Transaction> deposit(@RequestBody TransactionDepositRequestDto transaction) {
         return new ResponseEntity<>(transactionService
                 .deposit(transaction.getToAccountNumber(), transaction.getAmount()), HttpStatus.OK);
     }
 
     @PostMapping("transactions/withdraw")
-    public ResponseEntity<TransactionWithdrawResponseDto> withdraw(@RequestBody TransactionWithdrawRequestDto transaction) {
+    public ResponseEntity<Transaction> withdraw(@RequestBody TransactionWithdrawRequestDto transaction) {
         return new ResponseEntity<>(transactionService
                 .withdraw(transaction.getFromAccountNumber(), transaction.getAmount(), transaction.getPinCode()), HttpStatus.OK);
     }
 
     @PostMapping("transactions/transfer")
-    public ResponseEntity<TransactionTransferResponseDto> transfer(@RequestBody TransactionTransferRequestDto transaction) {
+    public ResponseEntity<Transaction> transfer(@RequestBody TransactionTransferRequestDto transaction) {
         return new ResponseEntity<>(transactionService
                 .transfer(transaction.getFromAccountNumber(), transaction.getToAccountNumber(), transaction.getAmount()), HttpStatus.OK);
 

@@ -1,30 +1,17 @@
 package com.example.practicaltest.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class AccountResponseDto {
 
     private String name;
     private BigDecimal balance;
 
-    public AccountResponseDto(String name, BigDecimal balance) {
-        this.name = name;
-        this.balance = balance;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
 }
