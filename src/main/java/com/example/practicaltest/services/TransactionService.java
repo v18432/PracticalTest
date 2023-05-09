@@ -8,6 +8,7 @@ import com.example.practicaltest.models.Transaction;
 import com.example.practicaltest.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -25,7 +26,7 @@ public class TransactionService {
         this.accountRepository = accountRepository;
     }
 
-
+    @Transactional
     public Transaction deposit(int accountNumber, BigDecimal amount) {
         Account account = accountRepository.findByAccountNumber(accountNumber);
         if (account == null) {
@@ -40,6 +41,7 @@ public class TransactionService {
         return transaction;
     }
 
+    @Transactional
     public Transaction withdraw(int fromAccountNumber, BigDecimal amount, String pinCode) {
         Account fromAccount = accountRepository.findByAccountNumber(fromAccountNumber);
 
@@ -63,6 +65,7 @@ public class TransactionService {
         return transaction;
     }
 
+    @Transactional
     public Transaction transfer(int fromAccountNumber, int toAccountNumber, BigDecimal amount) throws InsufficientFundsException {
         Account fromAccount = accountRepository.findByAccountNumber(fromAccountNumber);
 
