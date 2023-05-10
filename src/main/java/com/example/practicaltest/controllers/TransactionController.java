@@ -21,19 +21,19 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @PostMapping("transactions/deposit")
+    @PutMapping("transactions/deposit")
     public ResponseEntity<Transaction> deposit(@RequestBody TransactionDepositRequestDto transaction) {
         return new ResponseEntity<>(transactionService
                 .deposit(transaction.getToAccountNumber(), transaction.getAmount()), HttpStatus.OK);
     }
 
-    @PostMapping("transactions/withdraw")
+    @PutMapping("transactions/withdraw")
     public ResponseEntity<Transaction> withdraw(@RequestBody TransactionWithdrawRequestDto transaction) {
         return new ResponseEntity<>(transactionService
                 .withdraw(transaction.getFromAccountNumber(), transaction.getAmount(), transaction.getPinCode()), HttpStatus.OK);
     }
 
-    @PostMapping("transactions/transfer")
+    @PutMapping("transactions/transfer")
     public ResponseEntity<Transaction> transfer(@RequestBody TransactionTransferRequestDto transaction) {
         return new ResponseEntity<>(transactionService
                 .transfer(transaction.getFromAccountNumber(), transaction.getToAccountNumber(), transaction.getAmount()), HttpStatus.OK);
